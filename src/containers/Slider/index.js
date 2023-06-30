@@ -8,14 +8,22 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort(
-    (evtA, evtB) => new Date(evtB.date).getTime() - new Date(evtA.date).getTime()
+    (evtA, evtB) =>
+      new Date(evtB.date).getTime() - new Date(evtA.date).getTime()
   );
 
   const nextCard = () => {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
-      5000
-    );
+    setTimeout(() => {
+      let indextmp = index
+      if (indextmp <(byDateDesc.length -1) ) {
+        indextmp += 1
+      }
+      else{
+        indextmp=0
+      }
+
+      setIndex(indextmp);
+    }, 5000);
   };
   useEffect(() => {
     nextCard();
@@ -31,14 +39,14 @@ const Slider = () => {
   //   };
   // }, []);
 
-  
-
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
         <div
           key={event.id}
-          className={`SlideCard ${index === idx ? "SlideCard--display" : "SlideCard--hide"}`}
+          className={`SlideCard ${
+            index === idx ? "SlideCard--display" : "SlideCard--hide"
+          }`}
         >
           <img src={event.cover} alt="forum" />
           <div className="SlideCard__descriptionContainer">
