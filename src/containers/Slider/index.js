@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
-import { getMonth } from "../../helpers/Date";
+import { getMonth } from "../../helpers/dateHelpers";
 
 import "./style.scss";
 
