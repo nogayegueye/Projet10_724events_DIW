@@ -16,10 +16,9 @@ const EventList = () => {
   const filteredEvents = ((!type ? data?.events : data?.events) || [])
     .filter((event) => {
       if (!type || event.type === type) {
-          return true;
+        return true;
       }
       return false;
-    
     })
     .filter((event, index) => {
       if (
@@ -30,20 +29,19 @@ const EventList = () => {
       }
       return false;
     });
-  const changeType = (event) => {
-    const evtType = event.target.value;
+  const changeType = (eventType) => {
     setCurrentPage(1);
-    setType(evtType);
+    setType(eventType);
   };
-  // const changePage = (event, pageNumber) => {
-  //   event.preventDefault();
-  //   setCurrentPage(pageNumber);
-  // };
+  const changePage = (event, pageNumber) => {
+    event.preventDefault();
+    setCurrentPage(pageNumber);
+  };
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>
-      {error && <div>An error occured</div>}
+      {error && <div>An error occurred</div>}
       {data === null ? (
         "loading"
       ) : (
@@ -68,9 +66,12 @@ const EventList = () => {
           </div>
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
-              {/* <a key={n} href="#events" onClick={(event) => changePage(event, n + 1)}>; */}
+              <a
+                 key={`page-${n + 1}`}
+                href="#events"
+                onClick={(event) => changePage(event, n + 1)}
+                className={currentPage === n + 1 ? "active" : ""}
+              >
                 {n + 1}
               </a>
             ))}
